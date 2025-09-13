@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { getAllBuyersForExport } from '@/lib/buyers';
-import { createDemoUser } from '@/lib/auth';
+import { createDemoUser } from '@/lib/auth-server';
 import { searchFiltersSchema } from '@/lib/validations';
 
 export async function GET(request: NextRequest) {

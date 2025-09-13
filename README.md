@@ -68,7 +68,13 @@ DEMO_USER_EMAIL="demo@example.com"
 
 ### 3. Database Setup
 
-The database will be automatically initialized when you first run the application. The SQLite database file (\`local.db\`) will be created in the project root.
+Initialize the database with the following command:
+
+\`\`\`bash
+npm run db:init
+\`\`\`
+
+This will create the SQLite database file (\`local.db\`) in the project root and run all necessary migrations.
 
 ### 4. Run Development Server
 
@@ -176,6 +182,7 @@ src/
 - \`npm run lint\` - Run ESLint
 - \`npm test\` - Run test suite
 - \`npm run db:generate\` - Generate database migrations
+- \`npm run db:init\` - Initialize database with migrations and demo data
 - \`npm run type-check\` - Run TypeScript type checking
 
 ## 🎨 Design Decisions

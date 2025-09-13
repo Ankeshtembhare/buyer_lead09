@@ -1,6 +1,6 @@
 import { notFound } from 'next/navigation';
 import { getBuyerWithHistory } from '@/lib/buyers';
-import { createDemoUser } from '@/lib/auth';
+import { createDemoUser } from '@/lib/auth-server';
 import { BuyerDetailView } from '@/components/buyers/buyer-detail-view';
 
 interface BuyerDetailPageProps {

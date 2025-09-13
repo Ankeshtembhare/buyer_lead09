@@ -3,7 +3,7 @@ import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import { Navbar } from "@/components/layout/navbar";
 import { ErrorBoundary } from "@/components/ui/error-boundary";
-import "@/lib/db/init-db";
+// Database initialization is handled by scripts/init-db.ts
 
 const geistSans = Geist({
   variable: "--font-geist-sans",

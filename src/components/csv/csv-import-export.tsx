@@ -3,7 +3,6 @@
 import { useState, useRef } from 'react';
 import { parseCsvContent, validateCsvRows, convertCsvRowsToBuyers, generateCsvContent, downloadCsv, type CsvImportResult } from '@/lib/csv';
 import { createBuyer } from '@/lib/buyers';
-import { createDemoUser } from '@/lib/auth';
 import { CloudArrowUpIcon, CloudArrowDownIcon, ExclamationTriangleIcon } from '@heroicons/react/24/outline';
 
 interface CsvImportExportProps {
@@ -39,14 +38,24 @@ export function CsvImportExport({ onImportComplete, onExport }: CsvImportExportP
 
       // Convert to buyer objects
       const buyers = convertCsvRowsToBuyers(rows);
-      const user = await createDemoUser();
 
-      // Import valid rows
+      // Import valid rows via API
       let imported = 0;
       for (const buyerData of buyers) {
         try {
-          await createBuyer(buyerData, user.id);
-          imported++;
+          const response = await fetch('/api/buyers', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(buyerData),
+          });
+
+          if (response.ok) {
+            imported++;
+          } else {
+            console.error('Error importing buyer:', await response.text());
+          }
         } catch (error) {
           console.error('Error importing buyer:', error);
         }

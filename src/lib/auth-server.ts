@@ -9,7 +9,7 @@ export interface User {
   createdAt: Date;
 }
 
-// Simple demo authentication system
+// Server-side authentication functions
 export async function getCurrentUser(): Promise<User | null> {
   try {
     const cookieStore = cookies();

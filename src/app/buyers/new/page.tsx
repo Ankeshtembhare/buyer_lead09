@@ -1,6 +1,5 @@
 import { BuyerForm } from '@/components/forms/buyer-form';
-import { createBuyer } from '@/lib/buyers';
-import { createDemoUser } from '@/lib/auth';
+import { createDemoUser } from '@/lib/auth-server';
 import { redirect } from 'next/navigation';
 
 export default async function NewBuyerPage() {
@@ -10,8 +9,19 @@ export default async function NewBuyerPage() {
     'use server';
     
     try {
-      await createBuyer(data, user.id);
-      redirect('/buyers');
+      const response = await fetch(`${process.env.NEXTAUTH_URL || 'http://localhost:3000'}/api/buyers`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(data),
+      });
+
+      if (response.ok) {
+        redirect('/buyers');
+      } else {
+        throw new Error('Failed to create buyer');
+      }
     } catch (error) {
       console.error('Error creating buyer:', error);
       throw error;

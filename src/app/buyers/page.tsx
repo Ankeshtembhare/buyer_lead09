@@ -1,6 +1,6 @@
 import { Suspense } from 'react';
 import { BuyersList } from '@/components/buyers/buyers-list';
-import { createDemoUser } from '@/lib/auth';
+import { createDemoUser } from '@/lib/auth-server';
 import { searchBuyers } from '@/lib/buyers';
 import { searchFiltersSchema } from '@/lib/validations';
 

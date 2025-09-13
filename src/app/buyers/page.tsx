@@ -16,22 +16,25 @@ interface SearchParams {
 }
 
 interface BuyersPageProps {
-  searchParams: SearchParams;
+  searchParams: Promise<SearchParams>;
 }
 
 export default async function BuyersPage({ searchParams }: BuyersPageProps) {
   const user = await createDemoUser();
 
+  // Await searchParams as required by Next.js 15
+  const params = await searchParams;
+
   // Parse and validate search parameters
   const filters = searchFiltersSchema.parse({
-    search: searchParams.search,
-    city: searchParams.city,
-    propertyType: searchParams.propertyType,
-    status: searchParams.status,
-    timeline: searchParams.timeline,
-    page: searchParams.page ? parseInt(searchParams.page, 10) : 1,
-    sortBy: searchParams.sortBy || 'updatedAt',
-    sortOrder: searchParams.sortOrder || 'desc',
+    search: params.search,
+    city: params.city,
+    propertyType: params.propertyType,
+    status: params.status,
+    timeline: params.timeline,
+    page: params.page ? parseInt(params.page, 10) : 1,
+    sortBy: params.sortBy || 'updatedAt',
+    sortOrder: params.sortOrder || 'desc',
   });
 
   const buyersData = await searchBuyers(filters, user.id);

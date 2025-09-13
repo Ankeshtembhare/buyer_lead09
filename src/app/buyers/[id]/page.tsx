@@ -4,14 +4,15 @@ import { createDemoUser } from '@/lib/auth-server';
 import { BuyerDetailView } from '@/components/buyers/buyer-detail-view';
 
 interface BuyerDetailPageProps {
-  params: {
+  params: Promise<{
     id: string;
-  };
+  }>;
 }
 
 export default async function BuyerDetailPage({ params }: BuyerDetailPageProps) {
   const user = await createDemoUser();
-  const buyer = await getBuyerWithHistory(params.id, user.id);
+  const { id } = await params;
+  const buyer = await getBuyerWithHistory(id, user.id);
 
   if (!buyer) {
     notFound();

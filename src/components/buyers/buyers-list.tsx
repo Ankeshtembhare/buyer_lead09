@@ -70,6 +70,20 @@ export function BuyersList({ initialData }: BuyersListProps) {
     router.push('/buyers');
   };
 
+  const handlePageChange = (newPage: number) => {
+    const params = new URLSearchParams();
+    
+    if (search) params.set('search', search);
+    if (filters.city) params.set('city', filters.city);
+    if (filters.propertyType) params.set('propertyType', filters.propertyType);
+    if (filters.status) params.set('status', filters.status);
+    if (filters.timeline) params.set('timeline', filters.timeline);
+    if (newPage > 1) params.set('page', newPage.toString());
+    
+    const queryString = params.toString();
+    router.push(`/buyers${queryString ? `?${queryString}` : ''}`);
+  };
+
   const getStatusColor = (status: string) => {
     switch (status) {
       case 'New': return 'bg-blue-100 text-blue-800';
@@ -326,14 +340,16 @@ export function BuyersList({ initialData }: BuyersListProps) {
             <div>
               <nav className="relative z-0 inline-flex rounded-md shadow-sm -space-x-px">
                 <button
+                  onClick={() => handlePageChange(initialData.page - 1)}
                   disabled={initialData.page === 1}
-                  className="relative inline-flex items-center px-2 py-2 rounded-l-md border border-gray-300 bg-white text-sm font-medium text-gray-500 hover:bg-gray-50 disabled:opacity-50"
+                  className="relative inline-flex items-center px-2 py-2 rounded-l-md border border-gray-300 bg-white text-sm font-medium text-gray-500 hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed"
                 >
                   Previous
                 </button>
                 <button
+                  onClick={() => handlePageChange(initialData.page + 1)}
                   disabled={initialData.page === initialData.totalPages}
-                  className="relative inline-flex items-center px-2 py-2 rounded-r-md border border-gray-300 bg-white text-sm font-medium text-gray-500 hover:bg-gray-50 disabled:opacity-50"
+                  className="relative inline-flex items-center px-2 py-2 rounded-r-md border border-gray-300 bg-white text-sm font-medium text-gray-500 hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed"
                 >
                   Next
                 </button>

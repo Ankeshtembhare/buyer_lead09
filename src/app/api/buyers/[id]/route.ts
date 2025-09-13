@@ -6,11 +6,12 @@ import { checkRateLimit, getClientIP, RATE_LIMITS } from '@/lib/rate-limit';
 
 export async function GET(
   request: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
     const user = await createDemoUser();
-    const buyer = await getBuyerById(params.id, user.id);
+    const { id } = await params;
+    const buyer = await getBuyerById(id, user.id);
 
     if (!buyer) {
       return NextResponse.json({ error: 'Buyer not found' }, { status: 404 });
@@ -25,7 +26,7 @@ export async function GET(
 
 export async function PUT(
   request: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
     // Check rate limit
@@ -48,10 +49,11 @@ export async function PUT(
     }
 
     const user = await createDemoUser();
+    const { id } = await params;
     const body = await request.json();
     
     const validatedData = updateBuyerSchema.parse(body);
-    const updatedBuyer = await updateBuyer(params.id, validatedData, user.id);
+    const updatedBuyer = await updateBuyer(id, validatedData, user.id);
 
     if (!updatedBuyer) {
       return NextResponse.json({ error: 'Buyer not found' }, { status: 404 });
@@ -77,11 +79,12 @@ export async function PUT(
 
 export async function DELETE(
   request: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
     const user = await createDemoUser();
-    const success = await deleteBuyer(params.id, user.id);
+    const { id } = await params;
+    const success = await deleteBuyer(id, user.id);
 
     if (!success) {
       return NextResponse.json({ error: 'Buyer not found' }, { status: 404 });

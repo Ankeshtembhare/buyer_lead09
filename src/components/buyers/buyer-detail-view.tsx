@@ -272,7 +272,7 @@ export function BuyerDetailView({ buyer }: BuyerDetailViewProps) {
           {buyer.history && buyer.history.length > 0 && (
             <div className="bg-white shadow rounded-lg">
               <div className="px-6 py-4 border-b border-gray-200">
-                <h2 className="text-lg font-medium text-gray-900">Recent Activity</h2>
+                <h2 className="text-lg font-medium text-shadow-white">Recent Activity</h2>
               </div>
               <div className="px-6 py-4">
                 <div className="flow-root">
@@ -304,20 +304,20 @@ export function BuyerDetailView({ buyer }: BuyerDetailViewProps) {
                             </div>
                             <div className="min-w-0 flex-1 pt-1.5 flex justify-between space-x-4">
                               <div>
-                                <p className="text-sm text-gray-500">
+                                <p className="text-sm text-shadow-white">
                                   {activity.diff.action === 'created' ? 'Lead created' : 'Lead updated'}
                                 </p>
                                 {activity.diff.changes && (
                                   <div className="mt-1">
                                     {Object.entries(activity.diff.changes).map(([field, change]: [string, any]) => (
-                                      <p key={field} className="text-xs text-gray-600">
+                                      <p key={field} className="text-xs text-shadow-white">
                                         {field}: {change.from} → {change.to}
                                       </p>
                                     ))}
                                   </div>
                                 )}
                               </div>
-                              <div className="text-right text-sm whitespace-nowrap text-gray-500">
+                              <div className="text-right text-sm whitespace-nowrap text-shadow-white">
                                 {formatDate(activity.changedAt)}
                               </div>
                             </div>

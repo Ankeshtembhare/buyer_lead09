@@ -205,7 +205,7 @@ export function BuyersList({ initialData }: BuyersListProps) {
       )}
 
       {/* Results count */}
-      <div className="text-sm text-gray-500">
+      <div className="text-sm text-shadow-white">
         Showing {initialData.buyers.length} of {initialData.total} leads
       </div>
 
@@ -221,31 +221,31 @@ export function BuyersList({ initialData }: BuyersListProps) {
             <table className="min-w-full divide-y divide-gray-200">
               <thead className="bg-gray-50">
                 <tr>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                  <th className="px-6 py-3 text-left text-xs font-medium text-shadow-white uppercase tracking-wider">
                     Name
                   </th>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                  <th className="px-6 py-3 text-left text-xs font-medium text-shadow-white uppercase tracking-wider">
                     Phone
                   </th>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                  <th className="px-6 py-3 text-left text-xs font-medium text-shadow-white uppercase tracking-wider">
                     City
                   </th>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                  <th className="px-6 py-3 text-left text-xs font-medium text-shadow-white uppercase tracking-wider">
                     Property
                   </th>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                  <th className="px-6 py-3 text-left text-xs font-medium text-shadow-white uppercase tracking-wider">
                     Budget
                   </th>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                  <th className="px-6 py-3 text-left text-xs font-medium text-shadow-white uppercase tracking-wider">
                     Timeline
                   </th>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                  <th className="px-6 py-3 text-left text-xs font-medium text-shadow-white uppercase tracking-wider">
                     Status
                   </th>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                  <th className="px-6 py-3 text-left text-xs font-medium text-shadow-white uppercase tracking-wider">
                     Updated
                   </th>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                  <th className="px-6 py-3 text-left text-xs font-medium text-shadow-white uppercase tracking-wider">
                     Actions
                   </th>
                 </tr>
@@ -255,25 +255,25 @@ export function BuyersList({ initialData }: BuyersListProps) {
                   <tr key={buyer.id} className="hover:bg-gray-50">
                     <td className="px-6 py-4 whitespace-nowrap">
                       <div>
-                        <div className="text-sm font-medium text-gray-900">{buyer.fullName}</div>
+                        <div className="text-sm font-medium text-shadow-white">{buyer.fullName}</div>
                         {buyer.email && (
-                          <div className="text-sm text-gray-500">{buyer.email}</div>
+                          <div className="text-sm text-shadow-white">{buyer.email}</div>
                         )}
                       </div>
                     </td>
-                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+                    <td className="px-6 py-4 whitespace-nowrap text-sm text-shadow-white">
                       {buyer.phone}
                     </td>
-                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+                    <td className="px-6 py-4 whitespace-nowrap text-sm text-shadow-white">
                       {buyer.city}
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap">
-                      <div className="text-sm text-gray-900">{buyer.propertyType}</div>
+                      <div className="text-sm text-shadow-white">{buyer.propertyType}</div>
                       {buyer.bhk && (
-                        <div className="text-sm text-gray-500">{buyer.bhk} BHK</div>
+                        <div className="text-sm text-shadow-white">{buyer.bhk} BHK</div>
                       )}
                     </td>
-                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+                    <td className="px-6 py-4 whitespace-nowrap text-sm text-shadow-white">
                       {buyer.budgetMin && buyer.budgetMax ? (
                         <div>
                           {formatCurrency(buyer.budgetMin)} - {formatCurrency(buyer.budgetMax)}
@@ -283,10 +283,10 @@ export function BuyersList({ initialData }: BuyersListProps) {
                       ) : buyer.budgetMax ? (
                         formatCurrency(buyer.budgetMax)
                       ) : (
-                        <span className="text-gray-400">-</span>
+                        <span className="text-shadow-white">-</span>
                       )}
                     </td>
-                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+                    <td className="px-6 py-4 whitespace-nowrap text-sm text-shadow-white">
                       {buyer.timeline}
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap">
@@ -294,7 +294,7 @@ export function BuyersList({ initialData }: BuyersListProps) {
                         {buyer.status}
                       </span>
                     </td>
-                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                    <td className="px-6 py-4 whitespace-nowrap text-sm text-shadow-white">
                       {formatDate(buyer.updatedAt)}
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap text-sm font-medium">
@@ -332,7 +332,7 @@ export function BuyersList({ initialData }: BuyersListProps) {
           </div>
           <div className="hidden sm:flex-1 sm:flex sm:items-center sm:justify-between">
             <div>
-              <p className="text-sm text-gray-700">
+              <p className="text-sm text-shadow-white">
                 Showing page <span className="font-medium">{initialData.page}</span> of{' '}
                 <span className="font-medium">{initialData.totalPages}</span>
               </p>

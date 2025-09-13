@@ -31,8 +31,8 @@ export default async function NewBuyerPage() {
   return (
     <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
       <div className="mb-8">
-        <h1 className="text-3xl font-bold text-gray-900">Add New Lead</h1>
-        <p className="mt-2 text-gray-600">
+        <h1 className="text-3xl font-bold text-shadow-white">Add New Lead</h1>
+        <p className="mt-2 text-shadow-white">
           Capture a new buyer lead with all the required information
         </p>
       </div>

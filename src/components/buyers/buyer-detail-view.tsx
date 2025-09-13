@@ -4,8 +4,7 @@ import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { BuyerForm } from '@/components/forms/buyer-form';
 import { formatCurrency, formatDate } from '@/lib/utils';
-import { type BuyerWithHistory } from '@/lib/buyers';
-import { updateBuyer } from '@/lib/buyers';
+import { type BuyerWithHistory, updateBuyer, deleteBuyer } from '@/lib/buyers-client';
 import { PencilIcon, TrashIcon, ArrowLeftIcon } from '@heroicons/react/24/outline';
 import Link from 'next/link';
 
@@ -21,12 +20,12 @@ export function BuyerDetailView({ buyer }: BuyerDetailViewProps) {
   const handleUpdate = async (data: any) => {
     setIsLoading(true);
     try {
-      await updateBuyer(buyer.id, { ...data, updatedAt: buyer.updatedAt }, buyer.ownerId);
+      await updateBuyer(buyer.id, { ...data, updatedAt: buyer.updatedAt }, buyer.updatedAt);
       setIsEditing(false);
       router.refresh();
     } catch (error) {
       console.error('Error updating buyer:', error);
-      alert('Failed to update buyer. Please try again.');
+      alert(error instanceof Error ? error.message : 'Failed to update buyer. Please try again.');
     } finally {
       setIsLoading(false);
     }
@@ -37,11 +36,8 @@ export function BuyerDetailView({ buyer }: BuyerDetailViewProps) {
 
     setIsLoading(true);
     try {
-      const response = await fetch(`/api/buyers/${buyer.id}`, {
-        method: 'DELETE',
-      });
-
-      if (response.ok) {
+      const success = await deleteBuyer(buyer.id);
+      if (success) {
         router.push('/buyers');
       } else {
         alert('Failed to delete buyer');

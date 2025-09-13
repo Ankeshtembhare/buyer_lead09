@@ -73,7 +73,7 @@ export const csvRowSchema = z.object({
   phone: z.string().regex(/^\d{10,15}$/, 'Phone must be 10-15 digits'),
   city: cityEnum,
   propertyType: propertyTypeEnum,
-  bhk: bhkEnum.optional().or(z.literal('')),
+  bhk: z.string().optional().transform((val) => val && val !== '' ? val : undefined).pipe(bhkEnum.optional()),
   purpose: purposeEnum,
   budgetMin: z.string().optional().transform((val) => val ? parseInt(val, 10) : undefined).pipe(z.number().int().min(0).optional()),
   budgetMax: z.string().optional().transform((val) => val ? parseInt(val, 10) : undefined).pipe(z.number().int().min(0).optional()),

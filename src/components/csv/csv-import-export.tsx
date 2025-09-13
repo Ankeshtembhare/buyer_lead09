@@ -88,12 +88,19 @@ export function CsvImportExport({ onImportComplete, onExport }: CsvImportExportP
     try {
       // Get current filters from URL
       const params = new URLSearchParams(window.location.search);
+      
+      // Helper function to convert empty strings to undefined
+      const getParam = (key: string) => {
+        const value = params.get(key);
+        return value && value !== 'undefined' && value !== '' ? value : undefined;
+      };
+      
       const filters = {
-        search: params.get('search') || undefined,
-        city: params.get('city') || undefined,
-        propertyType: params.get('propertyType') || undefined,
-        status: params.get('status') || undefined,
-        timeline: params.get('timeline') || undefined,
+        search: getParam('search'),
+        city: getParam('city'),
+        propertyType: getParam('propertyType'),
+        status: getParam('status'),
+        timeline: getParam('timeline'),
       };
 
       // Fetch buyers with current filters

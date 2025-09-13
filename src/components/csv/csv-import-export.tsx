@@ -39,33 +39,39 @@ export function CsvImportExport({ onImportComplete, onExport }: CsvImportExportP
       // Convert to buyer objects
       const buyers = convertCsvRowsToBuyers(rows);
 
-      // Import valid rows via API
-      let imported = 0;
-      for (const buyerData of buyers) {
-        try {
-          const response = await fetch('/api/buyers', {
-            method: 'POST',
-            headers: {
-              'Content-Type': 'application/json',
-            },
-            body: JSON.stringify(buyerData),
+      // Import all buyers via bulk API
+      try {
+        const response = await fetch('/api/buyers/bulk-import', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(buyers),
+        });
+
+        if (response.ok) {
+          const result = await response.json();
+          setImportResult({
+            success: true,
+            imported: result.imported,
+            errors: result.failed > 0 ? [`${result.failed} records failed to import`] : [],
           });
-
-          if (response.ok) {
-            imported++;
-          } else {
-            console.error('Error importing buyer:', await response.text());
-          }
-        } catch (error) {
-          console.error('Error importing buyer:', error);
+        } else {
+          const errorData = await response.json();
+          setImportResult({
+            success: false,
+            imported: 0,
+            errors: [errorData.error || 'Import failed'],
+          });
         }
+      } catch (error) {
+        console.error('Error importing buyers:', error);
+        setImportResult({
+          success: false,
+          imported: 0,
+          errors: ['Network error during import'],
+        });
       }
-
-      setImportResult({
-        success: true,
-        imported,
-        errors: [],
-      });
 
       if (onImportComplete) {
         onImportComplete();

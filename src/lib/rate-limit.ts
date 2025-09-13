@@ -69,7 +69,7 @@ export function getClientIP(request: Request): string {
 
 // Rate limit configurations
 export const RATE_LIMITS = {
-  CREATE_BUYER: { windowMs: 60 * 1000, maxRequests: 10 }, // 10 requests per minute
+  CREATE_BUYER: { windowMs: 60 * 1000, maxRequests: 50 }, // 50 requests per minute (increased for CSV import)
   UPDATE_BUYER: { windowMs: 60 * 1000, maxRequests: 20 }, // 20 requests per minute
   CSV_IMPORT: { windowMs: 60 * 1000, maxRequests: 5 }, // 5 imports per minute
 } as const;

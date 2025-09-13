@@ -36,6 +36,7 @@ export async function POST(request: NextRequest) {
     const results = {
       successful: [] as any[],
       failed: [] as { data: any; error: string }[],
+      duplicates: [] as { data: any; existingBuyer: any }[],
     };
 
     // Process each buyer
@@ -45,10 +46,26 @@ export async function POST(request: NextRequest) {
         const buyer = await createBuyer(validatedData, user.id);
         results.successful.push(buyer);
       } catch (error) {
-        results.failed.push({
-          data: buyerData,
-          error: error instanceof Error ? error.message : 'Unknown error',
-        });
+        const errorMessage = error instanceof Error ? error.message : 'Unknown error';
+        
+        // Check if it's a duplicate error
+        if (errorMessage.includes('Duplicate buyer found')) {
+          // Extract existing buyer info from error message
+          const existingBuyer = {
+            fullName: buyerData.fullName,
+            phone: buyerData.phone,
+            email: buyerData.email,
+          };
+          results.duplicates.push({
+            data: buyerData,
+            existingBuyer,
+          });
+        } else {
+          results.failed.push({
+            data: buyerData,
+            error: errorMessage,
+          });
+        }
       }
     }
 
@@ -56,6 +73,7 @@ export async function POST(request: NextRequest) {
       success: true,
       imported: results.successful.length,
       failed: results.failed.length,
+      duplicates: results.duplicates.length,
       results,
     }, {
       headers: {

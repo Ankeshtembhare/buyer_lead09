@@ -51,17 +51,29 @@ export function CsvImportExport({ onImportComplete, onExport }: CsvImportExportP
 
         if (response.ok) {
           const result = await response.json();
+          const errors: Array<{ row: number; message: string }> = [];
+          
+          if (result.failed > 0) {
+            errors.push({ row: 0, message: `${result.failed} records failed to import` });
+          }
+          
+          if (result.duplicates > 0) {
+            errors.push({ row: 0, message: `${result.duplicates} duplicate records skipped` });
+          }
+          
           setImportResult({
             success: true,
             imported: result.imported,
-            errors: result.failed > 0 ? [`${result.failed} records failed to import`] : [],
+            duplicates: result.duplicates || 0,
+            errors,
           });
         } else {
           const errorData = await response.json();
           setImportResult({
             success: false,
             imported: 0,
-            errors: [errorData.error || 'Import failed'],
+            duplicates: 0,
+            errors: [{ row: 0, message: errorData.error || 'Import failed' }],
           });
         }
       } catch (error) {
@@ -69,7 +81,8 @@ export function CsvImportExport({ onImportComplete, onExport }: CsvImportExportP
         setImportResult({
           success: false,
           imported: 0,
-          errors: ['Network error during import'],
+          duplicates: 0,
+          errors: [{ row: 0, message: 'Network error during import' }],
         });
       }
 
@@ -81,6 +94,7 @@ export function CsvImportExport({ onImportComplete, onExport }: CsvImportExportP
       setImportResult({
         success: false,
         imported: 0,
+        duplicates: 0,
         errors: [{ row: 0, message: 'Failed to process CSV file' }],
       });
     } finally {
@@ -101,13 +115,19 @@ export function CsvImportExport({ onImportComplete, onExport }: CsvImportExportP
         return value && value !== 'undefined' && value !== '' ? value : undefined;
       };
       
-      const filters = {
-        search: getParam('search'),
-        city: getParam('city'),
-        propertyType: getParam('propertyType'),
-        status: getParam('status'),
-        timeline: getParam('timeline'),
-      };
+      const filters: Record<string, string> = {};
+      
+      const search = getParam('search');
+      const city = getParam('city');
+      const propertyType = getParam('propertyType');
+      const status = getParam('status');
+      const timeline = getParam('timeline');
+      
+      if (search) filters.search = search;
+      if (city) filters.city = city;
+      if (propertyType) filters.propertyType = propertyType;
+      if (status) filters.status = status;
+      if (timeline) filters.timeline = timeline;
 
       // Fetch buyers with current filters
       const response = await fetch(`/api/buyers/export?${new URLSearchParams(filters).toString()}`);

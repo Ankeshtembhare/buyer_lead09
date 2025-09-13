@@ -3,6 +3,7 @@ import { csvRowSchema, type CsvRowInput } from '@/lib/validations';
 export interface CsvImportResult {
   success: boolean;
   imported: number;
+  duplicates: number;
   errors: Array<{
     row: number;
     message: string;
@@ -98,6 +99,7 @@ export function validateCsvRows(rows: string[][]): CsvImportResult {
   return {
     success: errors.length === 0,
     imported,
+    duplicates: 0, // Validation doesn't check for duplicates, only format
     errors,
   };
 }

@@ -20,9 +20,46 @@ export interface PaginatedBuyers {
   totalPages: number;
 }
 
+// Check if buyer already exists (by phone or email)
+export async function checkDuplicateBuyer(data: any, ownerId: string): Promise<Buyer | null> {
+  const { phone, email } = data;
+  
+  // Check by phone first (required field)
+  const existingByPhone = await db
+    .select()
+    .from(buyers)
+    .where(and(eq(buyers.phone, phone), eq(buyers.ownerId, ownerId)))
+    .limit(1);
+  
+  if (existingByPhone.length > 0) {
+    return existingByPhone[0];
+  }
+  
+  // If email is provided, also check by email
+  if (email && email.trim() !== '') {
+    const existingByEmail = await db
+      .select()
+      .from(buyers)
+      .where(and(eq(buyers.email, email), eq(buyers.ownerId, ownerId)))
+      .limit(1);
+    
+    if (existingByEmail.length > 0) {
+      return existingByEmail[0];
+    }
+  }
+  
+  return null;
+}
+
 // Create a new buyer
 export async function createBuyer(data: any, ownerId: string): Promise<Buyer> {
   const validatedData = createBuyerSchema.parse(data);
+  
+  // Check for duplicates first
+  const existingBuyer = await checkDuplicateBuyer(validatedData, ownerId);
+  if (existingBuyer) {
+    throw new Error(`Duplicate buyer found: ${existingBuyer.fullName} (Phone: ${existingBuyer.phone})`);
+  }
   
   const buyerData: NewBuyer = {
     id: uuidv4(),

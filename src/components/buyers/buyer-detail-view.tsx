@@ -102,16 +102,16 @@ export function BuyerDetailView({ buyer }: BuyerDetailViewProps) {
       <div className="mb-8">
         <Link
           href="/buyers"
-          className="flex items-center text-sm text-gray-500 hover:text-gray-700 mb-4"
+          className="flex items-center text-shadow-white text-sm  hover:text-gray-700 mb-4"
         >
-          <ArrowLeftIcon className="h-4 w-4 mr-1" />
+          <ArrowLeftIcon className="h-4 text-shadow-white w-4 mr-1" />
           Back to leads
         </Link>
         
         <div className="flex justify-between items-start">
           <div>
-            <h1 className="text-3xl font-bold text-gray-900">{buyer.fullName}</h1>
-            <p className="mt-2 text-gray-600">Lead Details</p>
+            <h1 className="text-3xl font-bold text-shadow-white ">{buyer.fullName}</h1>
+            <p className="mt-2 text-shadow-white ">Lead Details</p>
           </div>
           <div className="flex space-x-3">
             <button
@@ -136,7 +136,7 @@ export function BuyerDetailView({ buyer }: BuyerDetailViewProps) {
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
         {/* Main Information */}
         <div className="lg:col-span-2 space-y-6">
-          <div className="bg-white shadow rounded-lg">
+          <div className="bg-white text-shadow-black shadow rounded-lg">
             <div className="px-6 py-4 border-b border-gray-200">
               <h2 className="text-lg font-medium text-gray-900">Contact Information</h2>
             </div>
@@ -272,7 +272,7 @@ export function BuyerDetailView({ buyer }: BuyerDetailViewProps) {
           {buyer.history && buyer.history.length > 0 && (
             <div className="bg-white shadow rounded-lg">
               <div className="px-6 py-4 border-b border-gray-200">
-                <h2 className="text-lg font-medium text-shadow-white">Recent Activity</h2>
+                <h2 className="text-lg font-medium text-gray-900">Recent Activity</h2>
               </div>
               <div className="px-6 py-4">
                 <div className="flow-root">
@@ -304,20 +304,20 @@ export function BuyerDetailView({ buyer }: BuyerDetailViewProps) {
                             </div>
                             <div className="min-w-0 flex-1 pt-1.5 flex justify-between space-x-4">
                               <div>
-                                <p className="text-sm text-shadow-white">
+                                <p className="text-sm text-gray-500">
                                   {activity.diff.action === 'created' ? 'Lead created' : 'Lead updated'}
                                 </p>
                                 {activity.diff.changes && (
                                   <div className="mt-1">
                                     {Object.entries(activity.diff.changes).map(([field, change]: [string, any]) => (
-                                      <p key={field} className="text-xs text-shadow-white">
+                                      <p key={field} className="text-xs text-gray-600">
                                         {field}: {change.from} → {change.to}
                                       </p>
                                     ))}
                                   </div>
                                 )}
                               </div>
-                              <div className="text-right text-sm whitespace-nowrap text-shadow-white">
+                              <div className="text-right text-sm  text-gray-500">
                                 {formatDate(activity.changedAt)}
                               </div>
                             </div>

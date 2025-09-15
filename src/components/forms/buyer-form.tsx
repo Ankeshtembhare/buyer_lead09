@@ -84,7 +84,7 @@ export function BuyerForm({ initialData, onSubmit, isLoading, submitLabel = 'Sav
             {...register('fullName')}
             type="text"
             className={cn(
-              'mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm',
+              'mt-1 block w-full rounded-md text-black border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm',
               errors.fullName && 'border-red-300 focus:border-red-500 focus:ring-red-500'
             )}
             aria-invalid={errors.fullName ? 'true' : 'false'}
@@ -106,7 +106,7 @@ export function BuyerForm({ initialData, onSubmit, isLoading, submitLabel = 'Sav
             {...register('email')}
             type="email"
             className={cn(
-              'mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm',
+              'mt-1 block w-full rounded-md text-black border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm',
               errors.email && 'border-red-300 focus:border-red-500 focus:ring-red-500'
             )}
             aria-invalid={errors.email ? 'true' : 'false'}
@@ -128,7 +128,7 @@ export function BuyerForm({ initialData, onSubmit, isLoading, submitLabel = 'Sav
             {...register('phone')}
             type="tel"
             className={cn(
-              'mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm',
+              'mt-1 block w-full rounded-md  text-black border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm',
               errors.phone && 'border-red-300 focus:border-red-500 focus:ring-red-500'
             )}
             aria-invalid={errors.phone ? 'true' : 'false'}
@@ -148,7 +148,7 @@ export function BuyerForm({ initialData, onSubmit, isLoading, submitLabel = 'Sav
           </label>
           <select
             {...register('city')}
-            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm"
+            className="mt-1 block w-full rounded-md  text-black border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm"
           >
             {cities.map(city => (
               <option key={city} value={city}>{city}</option>
@@ -163,7 +163,7 @@ export function BuyerForm({ initialData, onSubmit, isLoading, submitLabel = 'Sav
           </label>
           <select
             {...register('propertyType')}
-            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm"
+            className="mt-1 block w-full rounded-md  text-black border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm"
           >
             {propertyTypes.map(type => (
               <option key={type} value={type}>{type}</option>
@@ -180,7 +180,7 @@ export function BuyerForm({ initialData, onSubmit, isLoading, submitLabel = 'Sav
             <select
               {...register('bhk')}
               className={cn(
-                'mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm',
+                'mt-1 block w-full rounded-md  text-black border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm',
                 errors.bhk && 'border-red-300 focus:border-red-500 focus:ring-red-500'
               )}
               aria-invalid={errors.bhk ? 'true' : 'false'}
@@ -206,7 +206,7 @@ export function BuyerForm({ initialData, onSubmit, isLoading, submitLabel = 'Sav
           </label>
           <select
             {...register('purpose')}
-            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm"
+            className="mt-1 block w-full rounded-md  text-black border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm"
           >
             {purposes.map(purpose => (
               <option key={purpose} value={purpose}>{purpose}</option>
@@ -224,7 +224,7 @@ export function BuyerForm({ initialData, onSubmit, isLoading, submitLabel = 'Sav
             type="number"
             min="0"
             className={cn(
-              'mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm',
+              'mt-1 block w-full rounded-md  text-black border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm',
               errors.budgetMin && 'border-red-300 focus:border-red-500 focus:ring-red-500'
             )}
             aria-invalid={errors.budgetMin ? 'true' : 'false'}
@@ -247,7 +247,7 @@ export function BuyerForm({ initialData, onSubmit, isLoading, submitLabel = 'Sav
             type="number"
             min="0"
             className={cn(
-              'mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm',
+              'mt-1 block w-full rounded-md  text-black border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm',
               errors.budgetMax && 'border-red-300 focus:border-red-500 focus:ring-red-500'
             )}
             aria-invalid={errors.budgetMax ? 'true' : 'false'}
@@ -267,7 +267,7 @@ export function BuyerForm({ initialData, onSubmit, isLoading, submitLabel = 'Sav
           </label>
           <select
             {...register('timeline')}
-            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm"
+            className="mt-1 block w-full rounded-md  text-black border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm"
           >
             {timelines.map(timeline => (
               <option key={timeline} value={timeline}>{timeline}</option>
@@ -282,7 +282,7 @@ export function BuyerForm({ initialData, onSubmit, isLoading, submitLabel = 'Sav
           </label>
           <select
             {...register('source')}
-            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm"
+            className="mt-1 block w-full rounded-md  text-black border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm"
           >
             {sources.map(source => (
               <option key={source} value={source}>{source}</option>
@@ -297,7 +297,7 @@ export function BuyerForm({ initialData, onSubmit, isLoading, submitLabel = 'Sav
           </label>
           <select
             {...register('status')}
-            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm"
+            className="mt-1 block w-full rounded-md  text-black border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm"
           >
             {statuses.map(status => (
               <option key={status} value={status}>{status}</option>
@@ -315,7 +315,7 @@ export function BuyerForm({ initialData, onSubmit, isLoading, submitLabel = 'Sav
           {...register('notes')}
           rows={4}
           className={cn(
-            'mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm',
+            'mt-1 block w-full rounded-md  text-black border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm',
             errors.notes && 'border-red-300 focus:border-red-500 focus:ring-red-500'
           )}
           aria-invalid={errors.notes ? 'true' : 'false'}
@@ -337,7 +337,7 @@ export function BuyerForm({ initialData, onSubmit, isLoading, submitLabel = 'Sav
           {tags.map(tag => (
             <span
               key={tag}
-              className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-blue-100 text-blue-800"
+              className="inline-flex items-center  px-2.5 py-0.5 rounded-full text-xs font-medium bg-blue-100 text-blue-800"
             >
               {tag}
               <button
@@ -357,7 +357,7 @@ export function BuyerForm({ initialData, onSubmit, isLoading, submitLabel = 'Sav
             value={newTag}
             onChange={(e) => setNewTag(e.target.value)}
             placeholder="Add a tag"
-            className="block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm"
+            className="block w-full rounded-md  text-black border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm"
             onKeyPress={(e) => {
               if (e.key === 'Enter') {
                 e.preventDefault();

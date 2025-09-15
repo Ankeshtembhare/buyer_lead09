@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { createBuyer, type Buyer } from '@/lib/buyers';
+import { createBuyer } from '@/lib/buyers';
+import { type Buyer } from '@/lib/db/schema';
 import { createDemoUser } from '@/lib/auth-server';
 import { createBuyerSchema } from '@/lib/validations';
 import { checkRateLimit, getClientIP, RATE_LIMITS } from '@/lib/rate-limit';

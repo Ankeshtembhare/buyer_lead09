@@ -20,7 +20,5 @@ export async function initializeDatabase() {
   }
 }
 
-// Initialize database when this module is imported
-if (typeof window === 'undefined') {
-  initializeDatabase().catch(console.error);
-}
+// Database initialization should be called explicitly, not on import
+// This prevents issues during build and deployment

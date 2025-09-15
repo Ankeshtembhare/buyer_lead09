@@ -3,6 +3,7 @@ import { createBuyer } from '@/lib/buyers';
 import { createDemoUser } from '@/lib/auth-server';
 import { createBuyerSchema } from '@/lib/validations';
 import { checkRateLimit, getClientIP, RATE_LIMITS } from '@/lib/rate-limit';
+import { withDatabase } from '@/lib/db/build-init';
 
 export async function POST(request: NextRequest) {
   try {
@@ -29,7 +30,7 @@ export async function POST(request: NextRequest) {
     const body = await request.json();
     
     const validatedData = createBuyerSchema.parse(body);
-    const buyer = await createBuyer(validatedData, user.id);
+    const buyer = await withDatabase(() => createBuyer(validatedData, user.id));
 
     return NextResponse.json(buyer, {
       headers: {

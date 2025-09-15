@@ -9,7 +9,8 @@ export default async function NewBuyerPage() {
     'use server';
     
     try {
-      const response = await fetch(`${process.env.NEXTAUTH_URL || 'http://localhost:3000'}/api/buyers`, {
+      const baseUrl = process.env.NEXTAUTH_URL || (typeof window !== 'undefined' ? window.location.origin : 'http://localhost:3000');
+      const response = await fetch(`${baseUrl}/api/buyers`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

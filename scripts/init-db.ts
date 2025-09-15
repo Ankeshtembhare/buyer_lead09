@@ -1,19 +1,21 @@
-import Database from 'better-sqlite3';
-import { drizzle } from 'drizzle-orm/better-sqlite3';
-import { migrate } from 'drizzle-orm/better-sqlite3/migrator';
+import { createClient } from '@libsql/client';
+import { drizzle } from 'drizzle-orm/libsql';
+import { migrate } from 'drizzle-orm/libsql/migrator';
 import * as schema from '../src/lib/db/schema';
 
 async function initializeDatabase() {
   console.log('🗄️  Initializing database...');
   
   try {
-    // Create database connection
-    const sqlite = new Database('./local.db');
-    const db = drizzle(sqlite, { schema });
+    // Create database connection using libsql
+    const client = createClient({
+      url: process.env.DATABASE_URL || 'file:./local.db',
+    });
+    const db = drizzle(client, { schema });
 
     // Run migrations
     console.log('📋 Running database migrations...');
-    migrate(db, { migrationsFolder: './drizzle' });
+    await migrate(db, { migrationsFolder: './drizzle' });
 
     // Create demo user
     console.log('👤 Creating demo user...');
@@ -27,9 +29,6 @@ async function initializeDatabase() {
     }).onConflictDoNothing();
 
     console.log('✅ Database initialized successfully!');
-    
-    // Close connection
-    sqlite.close();
   } catch (error) {
     console.error('❌ Error initializing database:', error);
     process.exit(1);

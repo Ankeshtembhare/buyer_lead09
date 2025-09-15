@@ -3,7 +3,7 @@
 import { useState, useEffect } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { formatCurrency, formatDate } from '@/lib/utils';
-import { type Buyer, type PaginatedBuyers } from '@/lib/buyers-client';
+import { type PaginatedBuyers } from '@/lib/buyers-client';
 import { PlusIcon, MagnifyingGlassIcon, FunnelIcon } from '@heroicons/react/24/outline';
 import Link from 'next/link';
 
@@ -36,7 +36,7 @@ export function BuyersList({ initialData }: BuyersListProps) {
     }, 500);
 
     return () => clearTimeout(timer);
-  }, [search]);
+  }, [search, updateURL]);
 
   const updateURL = () => {
     const params = new URLSearchParams();

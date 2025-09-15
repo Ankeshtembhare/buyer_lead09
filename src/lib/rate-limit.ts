@@ -61,7 +61,7 @@ export function checkRateLimit(
   };
 }
 
-export function getClientIP(request: Request): string {
+export function getClientIP(_request: Request): string {
   // In production, you'd get this from headers like X-Forwarded-For
   // For demo purposes, we'll use a simple identifier
   return 'demo-client';

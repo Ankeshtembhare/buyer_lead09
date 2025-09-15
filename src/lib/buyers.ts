@@ -1,5 +1,5 @@
 import { db, buyers, buyerHistory, type Buyer, type NewBuyer, type NewBuyerHistory } from '@/lib/db';
-import { eq, and, like, desc, asc, sql, count } from 'drizzle-orm';
+import { eq, and, desc, asc, sql, count } from 'drizzle-orm';
 import { createBuyerSchema, updateBuyerSchema, type SearchFilters } from '@/lib/validations';
 import { v4 as uuidv4 } from 'uuid';
 
@@ -8,7 +8,7 @@ export interface BuyerWithHistory extends Buyer {
     id: string;
     changedAt: Date;
     changedBy: string;
-    diff: Record<string, any>;
+    diff: Record<string, unknown>;
   }>;
 }
 
@@ -21,7 +21,7 @@ export interface PaginatedBuyers {
 }
 
 // Check if buyer already exists (by phone or email)
-export async function checkDuplicateBuyer(data: any, ownerId: string): Promise<Buyer | null> {
+export async function checkDuplicateBuyer(data: { phone?: string; email?: string }, ownerId: string): Promise<Buyer | null> {
   const { phone, email } = data;
   
   // Check by phone first (required field)
@@ -52,7 +52,7 @@ export async function checkDuplicateBuyer(data: any, ownerId: string): Promise<B
 }
 
 // Create a new buyer
-export async function createBuyer(data: any, ownerId: string): Promise<Buyer> {
+export async function createBuyer(data: unknown, ownerId: string): Promise<Buyer> {
   const validatedData = createBuyerSchema.parse(data);
   
   // Check for duplicates first
@@ -125,7 +125,7 @@ export async function getBuyerWithHistory(id: string, userId: string): Promise<B
 }
 
 // Update buyer
-export async function updateBuyer(id: string, data: any, userId: string): Promise<Buyer | null> {
+export async function updateBuyer(id: string, data: unknown, userId: string): Promise<Buyer | null> {
   // Get current buyer to compare changes
   const currentBuyer = await getBuyerById(id, userId);
   
@@ -200,7 +200,7 @@ export async function deleteBuyer(id: string, userId: string): Promise<boolean> 
 export async function searchBuyers(filters: SearchFilters, userId: string): Promise<PaginatedBuyers> {
   const { search, city, propertyType, status, timeline, page, limit, sortBy, sortOrder } = filters;
   
-  let whereConditions = [eq(buyers.ownerId, userId)];
+  const whereConditions = [eq(buyers.ownerId, userId)];
 
   // Add search condition
   if (search) {
@@ -253,7 +253,7 @@ export async function searchBuyers(filters: SearchFilters, userId: string): Prom
 export async function getAllBuyersForExport(filters: Omit<SearchFilters, 'page' | 'limit'>, userId: string): Promise<Buyer[]> {
   const { search, city, propertyType, status, timeline, sortBy, sortOrder } = filters;
   
-  let whereConditions = [eq(buyers.ownerId, userId)];
+  const whereConditions = [eq(buyers.ownerId, userId)];
 
   if (search) {
     whereConditions.push(

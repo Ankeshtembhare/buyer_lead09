@@ -34,9 +34,9 @@ export async function POST(request: NextRequest) {
     }
 
     const results = {
-      successful: [] as any[],
-      failed: [] as { data: any; error: string }[],
-      duplicates: [] as { data: any; existingBuyer: any }[],
+      successful: [] as Buyer[],
+      failed: [] as { data: unknown; error: string }[],
+      duplicates: [] as { data: unknown; existingBuyer: Buyer }[],
     };
 
     // Process each buyer

@@ -69,7 +69,7 @@ export function validateCsvRows(rows: string[][]): CsvImportResult {
     }
 
     try {
-      const rowData: any = {
+      const rowData: Record<string, string> = {
         fullName: row[0] || '',
         email: row[1] || '',
         phone: row[2] || '',
@@ -88,7 +88,7 @@ export function validateCsvRows(rows: string[][]): CsvImportResult {
 
       csvRowSchema.parse(rowData);
       imported++;
-    } catch (error: any) {
+    } catch (error: unknown) {
       errors.push({
         row: i + 1,
         message: error.errors?.[0]?.message || 'Invalid data',
@@ -115,7 +115,7 @@ export function convertCsvRowsToBuyers(rows: string[][]): CsvRowInput[] {
       continue;
     }
 
-    const rowData: any = {
+    const rowData: Record<string, string> = {
       fullName: row[0] || '',
       email: row[1] || '',
       phone: row[2] || '',
@@ -135,7 +135,7 @@ export function convertCsvRowsToBuyers(rows: string[][]): CsvRowInput[] {
     try {
       const validatedData = csvRowSchema.parse(rowData);
       buyers.push(validatedData);
-    } catch (error) {
+    } catch {
       // Skip invalid rows - they're already validated in validateCsvRows
       continue;
     }
@@ -144,7 +144,7 @@ export function convertCsvRowsToBuyers(rows: string[][]): CsvRowInput[] {
   return buyers;
 }
 
-export function generateCsvContent(buyers: any[]): string {
+export function generateCsvContent(buyers: Array<Record<string, unknown>>): string {
   const headers = [
     'fullName',
     'email', 

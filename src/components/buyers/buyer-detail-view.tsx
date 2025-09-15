@@ -17,7 +17,7 @@ export function BuyerDetailView({ buyer }: BuyerDetailViewProps) {
   const [isLoading, setIsLoading] = useState(false);
   const router = useRouter();
 
-  const handleUpdate = async (data: any) => {
+  const handleUpdate = async (data: unknown) => {
     setIsLoading(true);
     try {
       await updateBuyer(buyer.id, { ...data, updatedAt: buyer.updatedAt }, buyer.updatedAt);
@@ -309,7 +309,7 @@ export function BuyerDetailView({ buyer }: BuyerDetailViewProps) {
                                 </p>
                                 {activity.diff.changes && (
                                   <div className="mt-1">
-                                    {Object.entries(activity.diff.changes).map(([field, change]: [string, any]) => (
+                                    {Object.entries(activity.diff.changes).map(([field, change]: [string, unknown]) => (
                                       <p key={field} className="text-xs text-gray-600">
                                         {field}: {change.from} → {change.to}
                                       </p>

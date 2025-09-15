@@ -26,7 +26,7 @@ export interface BuyerWithHistory extends Buyer {
     id: string;
     changedAt: Date;
     changedBy: string;
-    diff: Record<string, any>;
+    diff: Record<string, unknown>;
   }>;
 }
 
@@ -52,7 +52,7 @@ export async function getBuyerById(id: string): Promise<BuyerWithHistory | null>
   }
 }
 
-export async function updateBuyer(id: string, data: any, updatedAt: Date): Promise<Buyer | null> {
+export async function updateBuyer(id: string, data: unknown, updatedAt: Date): Promise<Buyer | null> {
   try {
     const response = await fetch(`/api/buyers/${id}`, {
       method: 'PUT',

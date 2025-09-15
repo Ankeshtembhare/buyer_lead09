@@ -3,9 +3,9 @@ import { createDemoUser } from '@/lib/auth-server';
 import { redirect } from 'next/navigation';
 
 export default async function NewBuyerPage() {
-  const user = await createDemoUser();
+  await createDemoUser();
 
-  async function handleSubmit(data: any) {
+  async function handleSubmit(data: unknown) {
     'use server';
     
     try {

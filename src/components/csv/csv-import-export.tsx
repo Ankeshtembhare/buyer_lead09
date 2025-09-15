@@ -2,7 +2,7 @@
 
 import { useState, useRef } from 'react';
 import { parseCsvContent, validateCsvRows, convertCsvRowsToBuyers, generateCsvContent, downloadCsv, type CsvImportResult } from '@/lib/csv';
-import { createBuyer } from '@/lib/buyers';
+// import { createBuyer } from '@/lib/buyers';
 import { CloudArrowUpIcon, CloudArrowDownIcon, ExclamationTriangleIcon } from '@heroicons/react/24/outline';
 
 interface CsvImportExportProps {

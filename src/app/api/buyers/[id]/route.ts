@@ -30,7 +30,7 @@ export async function PUT(
 ) {
   try {
     // Check rate limit
-    const clientIP = getClientIP(request);
+    const clientIP = getClientIP();
     const rateLimitKey = `update:${clientIP}`;
     const rateLimit = checkRateLimit(rateLimitKey, RATE_LIMITS.UPDATE_BUYER);
     

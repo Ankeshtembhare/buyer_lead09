@@ -7,7 +7,7 @@ import { checkRateLimit, getClientIP, RATE_LIMITS } from '@/lib/rate-limit';
 export async function POST(request: NextRequest) {
   try {
     // Check rate limit for bulk import
-    const clientIP = getClientIP(request);
+    const clientIP = getClientIP();
     const rateLimitKey = `bulk-import:${clientIP}`;
     const rateLimit = checkRateLimit(rateLimitKey, RATE_LIMITS.CSV_IMPORT);
     

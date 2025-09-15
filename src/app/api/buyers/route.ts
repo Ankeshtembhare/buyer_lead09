@@ -8,7 +8,7 @@ import { withDatabase } from '@/lib/db/build-init';
 export async function POST(request: NextRequest) {
   try {
     // Check rate limit
-    const clientIP = getClientIP(request);
+    const clientIP = getClientIP();
     const rateLimitKey = `create:${clientIP}`;
     const rateLimit = checkRateLimit(rateLimitKey, RATE_LIMITS.CREATE_BUYER);
     

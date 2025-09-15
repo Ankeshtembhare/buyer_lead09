@@ -6,13 +6,13 @@ export interface User {
   id: string;
   email: string;
   name: string;
-  createdAt: Date;
+  createdAt: Date | null;
 }
 
 // Server-side authentication functions
 export async function getCurrentUser(): Promise<User | null> {
   try {
-    const cookieStore = cookies();
+    const cookieStore = await cookies();
     const userId = cookieStore.get('user-id')?.value;
     
     if (!userId) {
@@ -55,7 +55,7 @@ export async function createDemoUser(): Promise<User> {
 }
 
 export async function setUserSession(userId: string) {
-  const cookieStore = cookies();
+  const cookieStore = await cookies();
   cookieStore.set('user-id', userId, {
     httpOnly: true,
     secure: process.env.NODE_ENV === 'production',
@@ -65,7 +65,7 @@ export async function setUserSession(userId: string) {
 }
 
 export async function clearUserSession() {
-  const cookieStore = cookies();
+  const cookieStore = await cookies();
   cookieStore.delete('user-id');
 }
 

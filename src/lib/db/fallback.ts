@@ -15,6 +15,13 @@ export const fallbackDb = {
     insert: (data: NewBuyer) => {
       const buyer: Buyer = {
         ...data,
+        email: data.email || null,
+        bhk: data.bhk || null,
+        budgetMin: data.budgetMin || null,
+        budgetMax: data.budgetMax || null,
+        notes: data.notes || null,
+        tags: data.tags || null,
+        status: data.status || 'New',
         createdAt: new Date(),
         updatedAt: new Date(),
       };

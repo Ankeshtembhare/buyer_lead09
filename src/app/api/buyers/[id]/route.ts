@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { getBuyerById, updateBuyer, deleteBuyer } from '@/lib/buyers';
+import { getBuyerWithHistory, updateBuyer, deleteBuyer } from '@/lib/buyers';
 import { createDemoUser } from '@/lib/auth-server';
 import { updateBuyerSchema } from '@/lib/validations';
 import { checkRateLimit, getClientIP, RATE_LIMITS } from '@/lib/rate-limit';
@@ -11,7 +11,7 @@ export async function GET(
   try {
     const user = await createDemoUser();
     const { id } = await params;
-    const buyer = await getBuyerById(id, user.id);
+    const buyer = await getBuyerWithHistory(id, user.id);
 
     if (!buyer) {
       return NextResponse.json({ error: 'Buyer not found' }, { status: 404 });

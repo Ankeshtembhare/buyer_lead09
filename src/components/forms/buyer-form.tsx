@@ -31,7 +31,7 @@ export function BuyerForm({ initialData, onSubmit, isLoading, submitLabel = 'Sav
     watch,
     formState: { errors },
     setValue,
-  } = useForm<CreateBuyerInput>({
+  } = useForm({
     resolver: zodResolver(createBuyerSchema),
     defaultValues: {
       fullName: initialData?.fullName || '',
@@ -39,15 +39,15 @@ export function BuyerForm({ initialData, onSubmit, isLoading, submitLabel = 'Sav
       phone: initialData?.phone || '',
       city: initialData?.city || 'Chandigarh',
       propertyType: initialData?.propertyType || 'Apartment',
-      bhk: initialData?.bhk || '',
+      bhk: initialData?.bhk || undefined,
       purpose: initialData?.purpose || 'Buy',
       budgetMin: initialData?.budgetMin || undefined,
       budgetMax: initialData?.budgetMax || undefined,
       timeline: initialData?.timeline || '0-3m',
       source: initialData?.source || 'Website',
-      status: initialData?.status || 'New',
+      status: (initialData?.status as 'New' | 'Qualified' | 'Contacted' | 'Visited' | 'Negotiation' | 'Converted' | 'Dropped') || 'New',
       notes: initialData?.notes || '',
-      tags: tags,
+      tags: tags || [],
     },
   });
 

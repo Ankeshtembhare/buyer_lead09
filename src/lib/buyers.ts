@@ -3,7 +3,8 @@ import { eq, and, desc, asc, sql, count } from 'drizzle-orm';
 import { createBuyerSchema, updateBuyerSchema, type SearchFilters } from '@/lib/validations';
 import { v4 as uuidv4 } from 'uuid';
 
-export interface BuyerWithHistory extends Buyer {
+export interface BuyerWithHistory extends Omit<Buyer, 'tags'> {
+  tags: string[];
   history?: Array<{
     id: string;
     changedAt: Date;
@@ -13,7 +14,7 @@ export interface BuyerWithHistory extends Buyer {
 }
 
 export interface PaginatedBuyers {
-  buyers: Buyer[];
+  buyers: Array<Omit<Buyer, 'tags'> & { tags: string[] }>;
   total: number;
   page: number;
   limit: number;
@@ -25,6 +26,10 @@ export async function checkDuplicateBuyer(data: { phone?: string; email?: string
   const { phone, email } = data;
   
   // Check by phone first (required field)
+  if (!phone) {
+    return null;
+  }
+  
   const existingByPhone = await db
     .select()
     .from(buyers)
@@ -117,7 +122,7 @@ export async function getBuyerWithHistory(id: string, userId: string): Promise<B
     tags: buyer.tags ? JSON.parse(buyer.tags) : [],
     history: history.map(h => ({
       id: h.id,
-      changedAt: h.changedAt,
+      changedAt: h.changedAt || new Date(),
       changedBy: h.changedBy,
       diff: JSON.parse(h.diff),
     })),
@@ -133,7 +138,7 @@ export async function updateBuyer(id: string, data: unknown, userId: string): Pr
     return null;
   }
 
-  const validatedData = updateBuyerSchema.parse({ ...data, id });
+  const validatedData = updateBuyerSchema.parse(typeof data === 'object' && data !== null ? { ...data as Record<string, unknown>, id } : { id });
   
   // Check for concurrent updates
   if (validatedData.updatedAt && currentBuyer.updatedAt && 
@@ -189,11 +194,15 @@ export async function updateBuyer(id: string, data: unknown, userId: string): Pr
 
 // Delete buyer
 export async function deleteBuyer(id: string, userId: string): Promise<boolean> {
-  const result = await db
-    .delete(buyers)
-    .where(and(eq(buyers.id, id), eq(buyers.ownerId, userId)));
-
-  return result.changes > 0;
+  try {
+    await db
+      .delete(buyers)
+      .where(and(eq(buyers.id, id), eq(buyers.ownerId, userId)));
+    return true;
+  } catch (error) {
+    console.error('Error deleting buyer:', error);
+    return false;
+  }
 }
 
 // Search and filter buyers

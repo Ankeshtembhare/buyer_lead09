@@ -29,15 +29,6 @@ export function BuyersList({ initialData }: BuyersListProps) {
     timeline: searchParams.get('timeline') || '',
   });
 
-  // Debounced search effect
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      updateURL();
-    }, 500);
-
-    return () => clearTimeout(timer);
-  }, [search, updateURL]);
-
   const updateURL = useCallback(() => {
     const params = new URLSearchParams();
     
@@ -50,6 +41,15 @@ export function BuyersList({ initialData }: BuyersListProps) {
     const queryString = params.toString();
     router.push(`/buyers${queryString ? `?${queryString}` : ''}`);
   }, [search, filters, router]);
+
+  // Debounced search effect
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      updateURL();
+    }, 500);
+
+    return () => clearTimeout(timer);
+  }, [search, updateURL]);
 
   const handleFilterChange = (key: string, value: string) => {
     setFilters(prev => ({ ...prev, [key]: value }));
@@ -295,7 +295,7 @@ export function BuyersList({ initialData }: BuyersListProps) {
                       </span>
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                      {formatDate(buyer.updatedAt)}
+                      {buyer.updatedAt ? formatDate(buyer.updatedAt) : 'Unknown'}
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap text-sm font-medium">
                       <Link

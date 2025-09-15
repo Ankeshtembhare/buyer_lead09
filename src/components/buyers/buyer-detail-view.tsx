@@ -20,7 +20,11 @@ export function BuyerDetailView({ buyer }: BuyerDetailViewProps) {
   const handleUpdate = async (data: unknown) => {
     setIsLoading(true);
     try {
-      await updateBuyer(buyer.id, { ...data, updatedAt: buyer.updatedAt }, buyer.updatedAt);
+      if (!buyer.updatedAt) {
+        throw new Error('Invalid buyer data: missing updatedAt');
+      }
+      const updateData = typeof data === 'object' && data !== null ? { ...data as Record<string, unknown>, updatedAt: buyer.updatedAt } : { updatedAt: buyer.updatedAt };
+      await updateBuyer(buyer.id, updateData, buyer.updatedAt);
       setIsEditing(false);
       router.refresh();
     } catch (error) {
@@ -86,7 +90,22 @@ export function BuyerDetailView({ buyer }: BuyerDetailViewProps) {
           </div>
           <div className="p-6">
             <BuyerForm
-              initialData={buyer}
+              initialData={{
+                fullName: buyer.fullName,
+                email: buyer.email || '',
+                phone: buyer.phone,
+                city: buyer.city as 'Chandigarh' | 'Mohali' | 'Zirakpur' | 'Panchkula' | 'Other',
+                propertyType: buyer.propertyType as 'Apartment' | 'Villa' | 'Plot' | 'Office' | 'Retail',
+                bhk: buyer.bhk as '1' | '2' | '3' | '4' | 'Studio' | undefined,
+                purpose: buyer.purpose as 'Buy' | 'Rent',
+                budgetMin: buyer.budgetMin || undefined,
+                budgetMax: buyer.budgetMax || undefined,
+                timeline: buyer.timeline as '0-3m' | '3-6m' | '>6m' | 'Exploring',
+                source: buyer.source as 'Website' | 'Referral' | 'Walk-in' | 'Call' | 'Other',
+                status: buyer.status as 'New' | 'Qualified' | 'Contacted' | 'Visited' | 'Negotiation' | 'Converted' | 'Dropped',
+                notes: buyer.notes || '',
+                tags: buyer.tags,
+              }}
               onSubmit={handleUpdate}
               isLoading={isLoading}
               submitLabel="Update Lead"
@@ -258,11 +277,11 @@ export function BuyerDetailView({ buyer }: BuyerDetailViewProps) {
                 </div>
                 <div>
                   <dt className="text-sm font-medium text-gray-500">Created</dt>
-                  <dd className="mt-1 text-sm text-gray-900">{formatDate(buyer.createdAt)}</dd>
+                  <dd className="mt-1 text-sm text-gray-900">{buyer.createdAt ? formatDate(buyer.createdAt) : 'Unknown'}</dd>
                 </div>
                 <div>
                   <dt className="text-sm font-medium text-gray-500">Last Updated</dt>
-                  <dd className="mt-1 text-sm text-gray-900">{formatDate(buyer.updatedAt)}</dd>
+                  <dd className="mt-1 text-sm text-gray-900">{buyer.updatedAt ? formatDate(buyer.updatedAt) : 'Unknown'}</dd>
                 </div>
               </dl>
             </div>
@@ -307,15 +326,15 @@ export function BuyerDetailView({ buyer }: BuyerDetailViewProps) {
                                 <p className="text-sm text-gray-500">
                                   {activity.diff.action === 'created' ? 'Lead created' : 'Lead updated'}
                                 </p>
-                                {activity.diff.changes && (
+                                {activity.diff.changes && typeof activity.diff.changes === 'object' && activity.diff.changes !== null ? (
                                   <div className="mt-1">
-                                    {Object.entries(activity.diff.changes).map(([field, change]: [string, unknown]) => (
+                                    {Object.entries(activity.diff.changes as Record<string, { from: unknown; to: unknown }>).map(([field, change]) => (
                                       <p key={field} className="text-xs text-gray-600">
-                                        {field}: {change.from} → {change.to}
+                                        {field}: {String(change.from)} → {String(change.to)}
                                       </p>
                                     ))}
                                   </div>
-                                )}
+                                ) : null}
                               </div>
                               <div className="text-right text-sm  text-gray-500">
                                 {formatDate(activity.changedAt)}

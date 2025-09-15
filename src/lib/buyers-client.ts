@@ -3,22 +3,22 @@
 export interface Buyer {
   id: string;
   fullName: string;
-  email?: string;
+  email: string | null;
   phone: string;
   city: string;
   propertyType: string;
-  bhk?: string;
+  bhk: string | null;
   purpose: string;
-  budgetMin?: number;
-  budgetMax?: number;
+  budgetMin: number | null;
+  budgetMax: number | null;
   timeline: string;
   source: string;
   status: string;
-  notes?: string;
+  notes: string | null;
   tags: string[];
   ownerId: string;
-  createdAt: Date;
-  updatedAt: Date;
+  createdAt: Date | null;
+  updatedAt: Date | null;
 }
 
 export interface BuyerWithHistory extends Buyer {
@@ -59,7 +59,7 @@ export async function updateBuyer(id: string, data: unknown, updatedAt: Date): P
       headers: {
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify({ ...data, updatedAt }),
+      body: JSON.stringify(typeof data === 'object' && data !== null ? { ...data as Record<string, unknown>, updatedAt } : { updatedAt }),
     });
 
     if (!response.ok) {

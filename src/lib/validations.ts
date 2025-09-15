@@ -34,9 +34,9 @@ export const buyerSchema = z.object({
   budgetMax: z.number().int().min(0, 'Budget must be positive').optional(),
   timeline: timelineEnum,
   source: sourceEnum,
-  status: statusEnum.default('New'),
+  status: statusEnum,
   notes: z.string().max(1000, 'Notes must be less than 1000 characters').optional().or(z.literal('')),
-  tags: z.array(z.string()).optional().default([]),
+  tags: z.array(z.string()).default([]),
 }).refine((data) => {
   // BHK is required for Apartment and Villa
   if (['Apartment', 'Villa'].includes(data.propertyType) && !data.bhk) {

@@ -89,9 +89,10 @@ export function validateCsvRows(rows: string[][]): CsvImportResult {
       csvRowSchema.parse(rowData);
       imported++;
     } catch (error: unknown) {
+      const errorMessage = error instanceof Error ? error.message : 'Invalid data';
       errors.push({
         row: i + 1,
-        message: error.errors?.[0]?.message || 'Invalid data',
+        message: errorMessage,
       });
     }
   }

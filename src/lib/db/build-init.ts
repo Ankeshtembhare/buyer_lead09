@@ -1,5 +1,4 @@
 // Build-time database initialization for Vercel
-import { db } from './index';
 import { initializeDatabase } from './init-db';
 
 let isInitialized = false;

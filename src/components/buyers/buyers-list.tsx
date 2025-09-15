@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { formatCurrency, formatDate } from '@/lib/utils';
 import { type PaginatedBuyers } from '@/lib/buyers-client';
@@ -38,7 +38,7 @@ export function BuyersList({ initialData }: BuyersListProps) {
     return () => clearTimeout(timer);
   }, [search, updateURL]);
 
-  const updateURL = () => {
+  const updateURL = useCallback(() => {
     const params = new URLSearchParams();
     
     if (search) params.set('search', search);
@@ -49,7 +49,7 @@ export function BuyersList({ initialData }: BuyersListProps) {
     
     const queryString = params.toString();
     router.push(`/buyers${queryString ? `?${queryString}` : ''}`);
-  };
+  }, [search, filters, router]);
 
   const handleFilterChange = (key: string, value: string) => {
     setFilters(prev => ({ ...prev, [key]: value }));

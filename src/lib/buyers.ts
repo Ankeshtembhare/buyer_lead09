@@ -161,7 +161,7 @@ export async function updateBuyer(id: string, data: unknown, userId: string): Pr
     .returning();
 
   // Track changes for history
-  const changes: Record<string, any> = {};
+  const changes: Record<string, { from: unknown; to: unknown }> = {};
   Object.keys(validatedData).forEach(key => {
     if (key !== 'id' && key !== 'updatedAt' && 
         currentBuyer[key as keyof Buyer] !== validatedData[key as keyof typeof validatedData]) {
